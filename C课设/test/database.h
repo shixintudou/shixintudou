@@ -7,4 +7,10 @@ typedef struct userinfo
 	char password[20];       //8-16位，密码
 	char phone[21];       //19位，手机号
 }USER;	//封装用户信息
+typedef struct videoinfo
+{
+	int vid;//视频编号
+	char comment[1000];//评论
+	int bingo;//点赞数
+}VIDEO;
 #endif

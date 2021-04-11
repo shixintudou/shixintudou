@@ -14,6 +14,22 @@
 #include"MOUSE.H"
 #include"DATABASE.H"
 
+void draw_my_information(USER* u);
+void my_information(int* page, USER* u);//page  5:基本信息 6：历史记录7：我的收藏 8：稍后再看 9：我的动态 0：首页void lightbutton_login_information(int x, int y, int x1, int y1, int color1, int color2, int flag);//登录界面按钮点亮
+void lightbutton_login_information(int x, int y, int x1, int y1, int color1, int color2, int flag);//按钮点亮
+void recoverbutton_login_information(int status);//恢复
+int control_judge(USER* u);
+void cpop(int i);
+
+
+
+void main_base(int* page, USER* u);
+void base_draw_information(USER* u);
+void base_draw_my_information(USER* u);
+void base_lightbutton_login_information(int x, int y, int x1, int y1, int color1, int color2, int flag);//按钮点亮
+void base_recoverbutton_login_information(int status);//恢复
+
+
 #define NUM0 0x5230
 #define NUM1 0x4f31
 #define NUM2 0x5032

@@ -5,6 +5,8 @@
 #include"public.h"
 #include"database.h"
 #include<string.h>
+#include<direct.h>
+
 /*********************************************
 FUNCTION:inputadmin
 ***********************************************/
@@ -368,10 +370,15 @@ int judge_rightpassword(char* name, char* pass)
 //***********************************************/
 void input_database(char* name, char* id, char* code, char* bank)
 {
-	FILE* fp;
+	FILE* fp, * fp1, * fp2, * fp3, * fp4;
 	USER* u;
 	char n;
-	if ((fp = fopen("Database\\UserData.dat", "wb+")) == NULL)//建立数据库
+	char STK_ADR[50] = { '\0' };
+	char STK_ADR1[50] = { '\0' };
+	char STK_ADR2[50] = { '\0' };
+	char STK_ADR3[50] = { '\0' };
+	char STK_ADR4[50] = { '\0' };
+	if ((fp = fopen("Database\\UserData.dat", "rb+")) == NULL)//建立数据库
 	{
 		printf("cannot open file UserData.dat");
 		delay(3000);
@@ -390,17 +397,77 @@ void input_database(char* name, char* id, char* code, char* bank)
 	strcpy(u->user, bank);
 	fseek(fp, 0, SEEK_END);//跳转至文件末尾
 	fwrite(u, sizeof(USER), 1, fp);//把用户信息写入文件 余额默认为0
-	if (u != NULL)
-	{
-		free(u);
-		u = NULL;
-	}
 	if (fclose(fp) != 0)
 	{
 		printf("\n cannot close Database.");
 		delay(3000);
 		exit(1);
 	}
+	strcpy(STK_ADR, "Database\\USER\\");      //遇到'\0'结束
+	strcat(STK_ADR, u->user);
+	//可创建文件夹
+	if (access(STK_ADR, 0) == -1)             //不存在文件夹
+	{
+		if (mkdir(STK_ADR) != 0)              //未成功创建
+		{
+			printf("The file opens failued");
+		}
+	}//若存在则直接打开
+	strcat(STK_ADR, "\\");
+	strcpy(STK_ADR1, STK_ADR);      //遇到'\0'结束
+	strcpy(STK_ADR2, STK_ADR);      //遇到'\0'结束
+	strcpy(STK_ADR3, STK_ADR);      //遇到'\0'结束
+	strcpy(STK_ADR4, STK_ADR); //遇到'\0'结束
+	strcat(STK_ADR, "history.dat");
+	strcat(STK_ADR2, "collect.dat");
+	strcat(STK_ADR3, "nextlook.dat");
+	strcat(STK_ADR4, "myaction.dat");
+	if ((fp1 = fopen(STK_ADR, "wb+")) == NULL)
+	{
+		printf("%s", "create fail");
+	}
+	if ((fp2 = fopen(STK_ADR2, "wb+")) == NULL)
+	{
+		printf("%s", "create fail");
+	}
+	if ((fp3 = fopen(STK_ADR3, "wb+")) == NULL)
+	{
+		printf("%s", "create fail");
+	}
+	if ((fp4 = fopen(STK_ADR4, "wb+")) == NULL)
+	{
+		printf("%s", "create fail");
+	}
+	if (u != NULL)
+	{
+		free(u);
+		u = NULL;
+	}
+	if (fclose(fp1) != 0)
+	{
+		printf("\n cannot close Database.");
+		delay(3000);
+		exit(1);
+	}
+	if (fclose(fp2) != 0)
+	{
+		printf("\n cannot close Database.");
+		delay(3000);
+		exit(1);
+	}
+	if (fclose(fp3) != 0)
+	{
+		printf("\n cannot close Database.");
+		delay(3000);
+		exit(1);
+	}
+	if (fclose(fp4) != 0)
+	{
+		printf("\n cannot close Database.");
+		delay(3000);
+		exit(1);
+	}
+	
 }
 
 ///*********************************************
@@ -654,5 +721,68 @@ void recoverhz(int x, int y, int color)
 {
 	setfillstyle(SOLID_FILL, color);
 	bar(x, y, x + 95, y + 35);
+}
+//传入信息
+int input_uinfo(USER* us)
+{
+	int i;
+	int len;
+	FILE* fp;
+	USER* u = NULL;
+	if ((fp = fopen("database\\UserData.dat", "rb+")) == NULL)
+	{
+		printf("cannot open file UserDat.dat");
+		delay(3000);
+		exit(1);
+	}
+	fseek(fp, 0, SEEK_END);//文件指针定位到最后一位
+	len = ftell(fp) / sizeof(USER);//计算用户个数
+	for (i = 0; i < len; i++)
+	{
+		if ((u = (USER*)malloc(sizeof(USER))) == NULL)
+		{
+			printf("memoryallocation runs wrong in lgfunc.c");
+			delay(3000);
+			exit(1);
+		}
+		fseek(fp, i * sizeof(USER), SEEK_SET);//每次往后移一个用户
+		fread(u, sizeof(USER), 1, fp);		  //将信息读入u
+		if (strcmp(us->user, u->ID) == 0)
+		{
+			memset(us, '\0', sizeof(USER));              //先重置
+			strcpy(us->user, u->user);
+			strcpy(us->password, u->password);
+			strcpy(us->ID, u->ID);
+			strcpy(us->phone, u->phone);
+			if (u != NULL)
+			{
+				free(u);
+				u = NULL;
+			}
+			if (fclose(fp) != 0)
+			{
+				printf("\n cannot close Database");
+				exit(1);
+			}
+			delay(2000);
+			return 1;
+		}
+		if (u != NULL)
+		{
+			free(u);
+			u = NULL;
+		}
+	}
+	if (u != NULL)
+	{
+		free(u);
+		u = NULL;
+	}
+	if (fclose(fp) != 0)
+	{
+		printf("\n cannot close Database");
+		exit(1);
+	}
+	return 0;
 }
 	

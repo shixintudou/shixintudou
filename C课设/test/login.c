@@ -81,9 +81,13 @@ void login_main(int *page, USER *u)//登录界面主控函数
 				MouseS = 0;
 				if (login_complete(u->user, u->password))     //信息正确
 				{
+					if (input_uinfo(u))
+					{
+						*page = 0;
+						return;
+					}
 					
-					* page = 1;
-					return;
+					
 				}
 				else
 				{
@@ -221,6 +225,5 @@ void recoverbutton_login(int status)//登录界面按钮点亮恢复
 		bar(110, 300, 220, 350);
 		rectangle(110, 300, 220, 350);
 		puthz(135, 315, "注册", 24, 34, LIGHTMAGENTA);
-		break;
 	}
 }

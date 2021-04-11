@@ -32,8 +32,14 @@ int main()
 		case 2:
 			register_main(&page);//×¢²á
 			break;
+		case 3:
+			my_information(&page, &u);
+			break;
 		case 4:
 			show(&page);//ÊÓÆµ²¥·Å
+			break;
+		case 5:
+			main_base(&page, &u);
 			break;
 		}
 	}
