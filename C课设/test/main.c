@@ -1,15 +1,24 @@
 #include"main.h"
 #include"public.h"
+#include"playvideo.h"
 int main()
 {
-	int page = 1;
-	int gd = DETECT, gm;
+	int page = 0;
+	int i = 0;
+	int gd = VGA, gm = VGAHI;
+	//char* t[] = { "Alittle\\a.bmp","Alittle\\b.bmp","Alittle\\c.bmp","Alittle\\d.bmp","Alittle\\e.bmp","Alittle\\f.bmp","Alittle\\g.bmp" };
+	//char* tp[] = { "a.dat","b.dat","c.dat","d.dat","e.dat","f.dat","g.dat" };
+	//char* ti[] = { "Alarge\\a.bmp","Alarge\\b.bmp","Alarge\\c.bmp","Alarge\\d.bmp","Alarge\\e.bmp","Alarge\\f.bmp","Alarge\\g.bmp" };
 	USER u;
 	memset(&u, '\0', sizeof(USER));
 	initgraph(&gd, &gm, "C:\\BORLANDC\\BGI");
-	welcome_page();	//欢迎界面
+	//bmp_convert("Alittle\\e.bmp", "e.dat");
+	/*for (i = 0; i < 7; i++)
+	{
+		bmp_convert(ti[i], tp[i]);
+	}*/
+	//welcome_page();	//欢迎界面
 	mouseinit();
-
 	while (1)
 	{
 		switch (page)
@@ -22,6 +31,9 @@ int main()
 			break;
 		case 2:
 			register_main(&page);//注册
+			break;
+		case 4:
+			show(&page);//视频播放
 			break;
 		}
 	}

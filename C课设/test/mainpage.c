@@ -3,18 +3,12 @@ void main_page(int *page)
 {
 	int num = 0;
 	int i = 0;
-	char* t[] = { "Alittle\\a.bmp","Alittle\\b.bmp","Alittle\\c.bmp","Alittle\\d.bmp","Alittle\\e.bmp","Alittle\\f.bmp","Alittle\\g.bmp" };
-	char* ti[] = { "Alarge\\a.bmp","Alarge\\b.bmp","Alarge\\c.bmp","Alarge\\d.bmp","Alarge\\e.bmp","Alarge\\f.bmp","Alarge\\g.bmp" };
+	char* t[] = { "Alittle\\a.dat","Alittle\\b.dat","Alittle\\c.dat","Alittle\\d.dat","Alittle\\f.dat","Alittle\\g.dat" };
 	clrmous(MouseX, MouseY);
 	delay(100);
 	cleardevice();
-	drawpage();
-	putbmp(100, 100, t[0]);
-	//while (i <=10)
-	//{
-	//	putbmp(100, 100, t[i % 8]);
-	//	i++;
-	//}
+	drawpage();	
+	show_dbm(96, 100, "Alittle\\a.dat");	
 	while (1)
 	{
 		/*putbmp(100, 100, t[i % 6]);
@@ -22,17 +16,56 @@ void main_page(int *page)
 		if(i%6==0)
 		drawpage();*/
 		newmouse(&MouseX, &MouseY, &press);
-		if (MouseX > 100 && MouseX < 260 && MouseY>100 && MouseY < 190)//"视频A"框判定
+		if (MouseX > 96 && MouseX < 256 && MouseY>100 && MouseY < 190)//"视频A"框判定
 		{
-			if (mouse_press(100, 100, 260, 190) == 2)
+			if (mouse_press(96, 100, 256, 190) == 2)
 			{
-				MouseS = 1;
+				MouseS = 0;
+				show_dbm(96, 100, t[i++]);
+				if (i >= sizeof(t))
+				{
+					i = 0;
+				}					
+				continue;
 			}
-			else if (mouse_press(100, 100, 260, 190) == 1)
+			else if (mouse_press(96, 100, 256, 190) == 1)
 			{
 				MouseS = 0;
 				*page = 4;
 				return;
+			}
+		}
+		if (MouseX > 384 && MouseX < 544 && MouseY>100 && MouseY < 190)//"视频B"框判定
+		{
+			if (mouse_press(384, 100, 544, 190) == 2)
+			{
+
+			}
+			else if (mouse_press(384, 100, 544, 190) == 1)
+			{
+
+			}
+		}
+		if (MouseX > 96 && MouseX < 256 && MouseY>290 && MouseY < 380)//"视频C"框判定
+		{
+			if (mouse_press(96, 290, 256, 380) == 2)
+			{
+
+			}
+			else if (mouse_press(96, 290, 256, 380) == 1)
+			{
+
+			}
+		}
+		if (MouseX > 384 && MouseX < 544 && MouseY>290 && MouseY < 380)//"视频D"框判定
+		{
+			if (mouse_press(384, 290, 544, 380) == 2)
+			{
+
+			}
+			else if (mouse_press(384, 290, 544, 380) == 1)
+			{
+
 			}
 		}
 		if (MouseX > 480 && MouseX < 600 && MouseY>400 && MouseY < 470)//"我的"框判定
@@ -76,9 +109,8 @@ void drawpage()
 	bar(40, 400, 160, 470);
 	puthz(60, 420, "主页", 32, 50, WHITE);
 
-	puthz(200, 240, "推荐", 32, 45, LIGHTRED);
-	puthz(440, 240, "热门", 32, 45, LIGHTRED);
-	bar(0, 0, 640, 50);
+	puthz(200, 40, "推荐", 32, 45, LIGHTRED);
+	puthz(440, 40, "热门", 32, 45, LIGHTRED);
 }
 void lightbutton_mainpage(int x, int y, int x1, int y1, int color1, int color2, int flag)
 {

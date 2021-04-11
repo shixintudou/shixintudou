@@ -221,5 +221,6 @@ void recoverbutton_login(int status)//登录界面按钮点亮恢复
 		bar(110, 300, 220, 350);
 		rectangle(110, 300, 220, 350);
 		puthz(135, 315, "注册", 24, 34, LIGHTMAGENTA);
+		break;
 	}
 }
